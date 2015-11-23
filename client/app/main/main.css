@@ -32,3 +32,8 @@
 .navbar-text {
     margin-left: 15px;
 }
+
+#chart {
+    height: 400px; 
+    min-width: 310px;
+}

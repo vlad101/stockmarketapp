@@ -13,14 +13,18 @@
 <div class="container">
   <br><br>
   <h1 class="page-header text-center">Stock Market Chart</h1>
-  <!-- Display stock market chart -->
-  <div id="chart" style="height: 400px; min-width: 310px"></div>
-  
+
+  <!-- Hide stock market chart if no data added  -->
+  <div ng-show="chartDataEmpty"><h2><br><br>No stocks added, add some stocks!<h2></div>
+
+  <!-- Display stock market chart if there is no error -->
+  <div id="chart" ng-show="!chartDataEmpty"></div>
+
   <!-- Form for adding a new stock to the chart -->
   <br><br>
   <div class="row">
     <div class="col-lg-12">
-      <h2>Stock Tracking List [Syncs in realtime across clients]</h2><br>
+      <h3>Stock Tracking List [syncs in realtime across clients]</h3>
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
         <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
       </ul>
@@ -30,11 +34,13 @@
   <form class="thing-form">
     <label>Add a Stock</label>
     <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new stock" ng-model="newThing">
+      <input type="text" class="form-control" placeholder="Add a new stock" ng-model="newThing" required>
       <span class="input-group-btn">
         <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
       </span>
     </p>
+  <!-- Do not display chart if there is an error, show error message  -->
+  <div style="text-danger" ng-show="invalidStock"> {{ invalidStock }} </div>
   </form>
 </div>
 
