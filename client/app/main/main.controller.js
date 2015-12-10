@@ -47,10 +47,6 @@ angular.module('workspaceApp')
                 // Insert a new stock to DB
                 $http.post('/api/things', { name: $scope.newThing });
 
-                $scope.$apply(function() {
-                  $scope.invalidStock = "Stock added!";
-                });
-
                 // Set form to empty
                 $scope.newThing = '';
 
@@ -68,10 +64,15 @@ angular.module('workspaceApp')
     $scope.deleteThing = function(thing) {
 
       // Delete a new stock from DB
-      $http.delete('/api/things/' + thing._id);
-
+      //$http.delete('/api/things/' + thing._id);
+    $http.delete("/api/things/" + thing._id)
+      .success(function() {
+        $scope.refreshChart();
+      }).error(function(error) {
+      }).then(function() {
+      });
       // Reload Market Chart
-      $scope.refreshChart();
+      //$scope.refreshChart();
     };
 
     $scope.$on('$destroy', function () {
