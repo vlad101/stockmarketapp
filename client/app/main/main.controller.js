@@ -37,13 +37,19 @@ angular.module('workspaceApp')
 
                 for(var company in $scope.awesomeThings) {
                   if($scope.awesomeThings[company].name == $scope.newThing) {
-                    $scope.invalidStock = "Stock is already added, try again!";
+                    $scope.$apply(function() {
+                      $scope.invalidStock = "Stock is already added, try again!";
+                    });
                     return;
                   }
                 }
 
                 // Insert a new stock to DB
                 $http.post('/api/things', { name: $scope.newThing });
+
+                $scope.$apply(function() {
+                  $scope.invalidStock = "Stock added!";
+                });
 
                 // Set form to empty
                 $scope.newThing = '';
@@ -52,7 +58,9 @@ angular.module('workspaceApp')
                 $scope.refreshChart();
           })
       .fail(function(jqXHR, textStatus, errorThrown) {
-        $scope.invalidStock = "Stock is invalid, try again!";
+        $scope.$apply(function() {
+          $scope.invalidStock = "Stock is invalid, try again!";
+        });
       });
     }
 
